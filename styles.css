@@ -1,0 +1,2179 @@
+/*
+ * Part of ToneAnalysis.com project.
+ * GitHub: https://github.com/ChadsCode/ToneAnalysis
+ * License: MIT Open-Source
+ * Website: https://www.toneanalysis.com/
+ * Copyright (c) 2025 Chad Wigington
+ * LinkedIn: https://www.linkedin.com/in/chadwigington/
+ */
+
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+     ROOT VARIABLES - BRAND COLORS
+     ========================================================================== */
+:root {
+  /* Primary Color Scheme */
+  --primary-color: #4863a0; /* Blue */
+  --primary-light: #6a80b3; /* Lighter Blue */
+  --primary-dark: #3a5085; /* Darker Blue */
+
+  /* Supporting Colors */
+  --accent-color: #e49b0f; /* Yellow - for emphasis and calls to action */
+  --accent-light: #f2b13d; /* Lighter Yellow */
+  --accent-dark: #c08209; /* Darker Yellow */
+
+  /* Success/Positive Indicators */
+  --success-color: #2ca58d; /* Green */
+  --success-light: #45baa3; /* Lighter Green */
+  --success-dark: #228a76; /* Darker Green */
+
+  /* Error/Negative Indicators */
+  --error-color: #e63946; /* Red */
+  --error-light: #ea5d67; /* Lighter Red */
+  --error-dark: #c0242f; /* Darker Red */
+
+  /* Neutrals */
+  --text-color: #424044; /* Dark Gray - for main text */
+  --text-light: #4a484c; /* Light Gray - for secondary text */
+  --text-lighter: #7a787c; /* Lighter Gray - for tertiary text */
+
+  /* Background Colors */
+  --background-light: #f7f7f8; /* Very Light Gray for backgrounds */
+  --white: #ffffff;
+  --card-bg: #fcfcfd;
+
+  /* UI Elements */
+  --border-light: rgba(66, 64, 68, 0.1);
+  --shadow-light: 0 2px 10px rgba(66, 64, 68, 0.05);
+  --shadow-medium: 0 4px 15px rgba(66, 64, 68, 0.1);
+  --shadow-dark: 0 8px 30px rgba(66, 64, 68, 0.15);
+  --border-radius: 10px;
+  --transition-speed: 0.3s;
+}
+
+/* ==========================================================================
+     GLOBAL TYPOGRAPHY & BASE ELEMENT STYLES
+     ========================================================================== */
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  scroll-behavior: smooth;
+  background-color: var(--background-light);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+     NAVIGATION BAR
+     ========================================================================== */
+.main-nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  box-shadow: var(--shadow-light);
+  z-index: 1000;
+  transition: all var(--transition-speed) ease;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0.8rem 1.5rem;
+}
+
+/* Logo Styles */
+.logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: inherit;
+}
+
+.logo a {
+  text-decoration: none !important;
+  color: var(--primary-color) !important;
+  display: flex;
+  align-items: center;
+}
+
+.logo a i {
+  margin-right: 0.5rem;
+}
+
+.logo a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+}
+
+.logo a:hover .logo-img {
+  opacity: 0.9;
+}
+
+.logo i {
+  margin-right: 0.5rem;
+  font-size: 1.8rem;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links li {
+  margin-left: 2rem;
+}
+
+.nav-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a i {
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary-color);
+}
+
+/* Extension Badge Styles */
+.extension-badge {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.extension-badge i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.extension-badge:hover {
+  background-color: var(--primary-light);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Mobile Navigation Toggle */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: var(--primary-color);
+  margin: 3px 0;
+  transition: all var(--transition-speed) ease;
+}
+
+/* ==========================================================================
+     HERO SECTION
+     ========================================================================== */
+.hero {
+  width: 100%;
+  padding: 140px 20px 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
+  color: var(--white);
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 1.75rem; /* Changed from 3.5rem to 1.75rem (half size) */
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.hero-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.2rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  backdrop-filter: blur(4px);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.badge i {
+  margin-right: 0.5rem;
+  color: var(--accent-color);
+}
+
+/* ==========================================================================
+     MAIN CONTAINER
+     ========================================================================== */
+.main-container {
+  width: 100%;
+  max-width: 800px;
+  margin: -40px auto 3rem;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+/* ==========================================================================
+     INPUT SECTION
+     ========================================================================== */
+.input-section {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-light);
+}
+
+.textarea-wrapper {
+  position: relative;
+  border-bottom: 1px solid var(--border-light);
+}
+
+textarea {
+  width: 100%;
+  height: 180px;
+  padding: 1.5rem;
+  font-size: 1rem;
+  border: none;
+  resize: none;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* Override browser specific autofill and focus - blue line */
+
+textarea:focus {
+  outline: none;
+  background-color: var(--card-bg);
+}
+
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--card-bg) inset !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+}
+
+textarea:focus {
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+     BUTTON STYLES
+     ========================================================================== */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.button-container button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-container button i {
+  margin-right: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--white);
+  flex: 1;
+  max-width: 70%;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(72, 99, 160, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-light);
+  border: 1px solid #ddd;
+  margin-left: 0.75rem;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+  color: var(--text-color);
+}
+
+/* Disabled Button State */
+.btn-primary.disabled {
+  background-color: #aab2bd;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-primary.disabled:hover {
+  background-color: #aab2bd;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Pulse Animation for Buttons */
+.pulse-animation {
+  position: relative;
+}
+
+.pulse-animation::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: 0 0 0 0 rgba(72, 99, 160, 0.7);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(72, 99, 160, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(72, 99, 160, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(72, 99, 160, 0);
+  }
+}
+
+/* ==========================================================================
+     OUTPUT CONTAINER & RESULTS DISPLAY
+     ========================================================================== */
+.output-container {
+  perspective: 1000px;
+  margin-bottom: 2rem;
+}
+
+.output-section {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 0;
+  box-shadow: var(--shadow-medium);
+  font-size: 1rem;
+  min-height: 50px;
+  transition: all var(--transition-speed) ease;
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: rotateX(-10deg) translateY(20px);
+  animation: none;
+  border: 1px solid var(--border-light);
+}
+
+.output-section:not(:empty) {
+  padding: 1.5rem;
+  opacity: 1;
+  transform: rotateX(0) translateY(0);
+  animation: slide-up 0.5s forwards;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: rotateX(-10deg) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0) translateY(0);
+  }
+}
+
+.output-section h2 {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.output-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--primary-color);
+}
+
+.output-section h3 {
+  color: var(--primary-dark);
+  font-size: 1.3rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.output-section p {
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.output-section .error {
+  color: var(--error-color);
+  padding: 1rem;
+  background-color: rgba(230, 57, 70, 0.1);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+     LOADING ANIMATION
+     ========================================================================== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  margin: 0 auto 2rem;
+  border: 1px solid var(--border-light);
+  max-width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+/* Add this to ensure the text is centered */
+.loading-container p {
+  color: var(--text-light);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(72, 99, 160, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+     MODAL STYLES
+     ========================================================================== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  overflow: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: var(--white);
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 600px;
+  box-shadow: var(--shadow-dark);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  border: 1px solid var(--border-light);
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.close-modal {
+  float: right;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+  color: var(--primary-color);
+}
+
+.modal h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.modal h3 {
+  margin: 1.5rem 0 0.5rem;
+  color: var(--primary-dark);
+}
+
+.modal p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.modal ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal li {
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+     SIGNATURE STYLES
+     ========================================================================== */
+.signature {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--primary-dark);
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.signature-name {
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.signature-title {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-style: normal;
+}
+
+/* ==========================================================================
+     FOOTER STYLES
+     ========================================================================== */
+footer {
+  background-color: #353438;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.footer-logo i {
+  margin-right: 0.5rem;
+  color: var(--accent-color);
+  display: none !important; /* Hides the icon */
+}
+
+.footer-text {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  color: var(--white);
+}
+
+/* Enhanced Footer Styles */
+.main-footer {
+  background-color: #353438;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 3rem 0 0;
+  margin-top: 3rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.footer-section {
+  margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+  color: var(--white);
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  padding-bottom: 0.7rem;
+}
+
+.footer-section h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+.brand-section .footer-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.brand-section .footer-logo i {
+  margin-right: 0.7rem;
+  font-size: 1.8rem;
+  color: var(--accent-color);
+}
+
+.brand-section .tagline {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-section ul li a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.footer-section ul li a:hover {
+  color: var(--accent-light);
+  transform: translateX(3px);
+}
+
+.premium p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.premium-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.2rem;
+  background-color: var(--accent-color);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.premium-btn i {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.premium-btn:hover {
+  background-color: var(--accent-light);
+}
+
+.premium-btn:hover i {
+  transform: translateX(3px);
+}
+
+.extension-promo {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.extension-promo i {
+  margin-right: 0.7rem;
+  color: var(--success-light);
+}
+
+.extension-promo a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.extension-promo a:hover {
+  color: var(--accent-color);
+}
+
+/* Footer Social Icons */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+/* Sub-footer */
+.sub-footer {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem 0;
+  margin-top: 1rem;
+}
+
+.sub-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: var(--accent-color);
+}
+
+/* ==========================================================================
+     ENHANCEMENTS: WORD COUNT & LIMIT NOTICE
+     ========================================================================== */
+.word-count {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 8px;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.word-limit-notice {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(230, 57, 70, 0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: pulse-red 2s infinite;
+  z-index: 10;
+}
+
+/* ==========================================================================
+     ENHANCEMENTS: COOLDOWN STYLES
+     ========================================================================== */
+.cooldown-notice {
+  display: none;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  width: 65%; /* Changed from 80% to 65% (reduced by 15%) */
+  margin-bottom: 0.5rem;
+}
+
+.cooldown-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--error-color);
+  margin-right: 10px;
+}
+
+.cooldown-indicator.pulse {
+  animation: pulse-red 1s;
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+  }
+}
+
+/* ==========================================================================
+     ENHANCEMENTS: NOTIFICATION STYLES (UPDATED)
+     ========================================================================== */
+.notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
+}
+
+.notification.info {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.notification.success {
+  background-color: #2ca58dff !important;
+  color: white;
+}
+
+.notification.error {
+  background-color: #e63946ff !important;
+  color: white;
+}
+
+.notification.warning {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* ==========================================================================
+     ANALYSIS CARDS AND COMPONENTS
+     ========================================================================== */
+
+/* Component-specific colors */
+/* Positive/negative sentiment indicators */
+.positive {
+  color: var(--success-color);
+}
+
+.negative {
+  color: var(--error-color);
+}
+
+.neutral {
+  color: var(--text-light);
+}
+
+/* Analysis Cards and Components */
+.analysis-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--border-light);
+}
+
+.analysis-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-dark);
+}
+
+.analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(66, 64, 68, 0.1);
+}
+
+.analysis-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.analysis-title i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.analysis-date {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.analysis-content {
+  margin-bottom: 1rem;
+}
+
+.analysis-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-item {
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(72, 99, 160, 0.05);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.metric-item:hover {
+  background-color: rgba(72, 99, 160, 0.1);
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value.positive {
+  color: var(--success-color);
+}
+
+.metric-value.negative {
+  color: var(--error-color);
+}
+
+.metric-value.neutral {
+  color: var(--accent-color);
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* ==========================================================================
+     TONE ANALYSIS VISUALIZATION
+     ========================================================================== */
+.tone-visualization {
+  width: 100%;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-light);
+}
+
+.tone-bar-container {
+  margin: 1rem 0;
+}
+
+.tone-bar-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.tone-bar-title {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.tone-bar-value {
+  font-weight: 600;
+}
+
+.tone-bar-background {
+  height: 12px;
+  width: 100%;
+  background-color: rgba(72, 99, 160, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tone-bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease-out;
+}
+
+.tone-bar.positive {
+  background: linear-gradient(
+    90deg,
+    var(--success-light),
+    var(--success-color)
+  );
+}
+
+.tone-bar.negative {
+  background: linear-gradient(90deg, var(--error-light), var(--error-color));
+}
+
+.tone-bar.neutral {
+  background: linear-gradient(90deg, var(--text-light), var(--text-color));
+}
+
+.tone-bar.confidence {
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--primary-color)
+  );
+}
+
+.tone-bar.enthusiasm {
+  background: linear-gradient(90deg, var(--accent-light), var(--accent-color));
+}
+
+/* ==========================================================================
+     SENTIMENT TAGS & INDICATORS
+     ========================================================================== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tag i {
+  margin-right: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.tag.positive {
+  background-color: rgba(44, 165, 141, 0.1);
+  color: var(--success-color);
+}
+
+.tag.negative {
+  background-color: rgba(230, 57, 70, 0.1);
+  color: var(--error-color);
+}
+
+.tag.neutral {
+  background-color: rgba(228, 155, 15, 0.1);
+  color: var(--accent-color);
+}
+
+.tag.primary {
+  background-color: rgba(72, 99, 160, 0.1);
+  color: var(--primary-color);
+}
+
+/* ==========================================================================
+     PROGRESS INDICATORS
+     ========================================================================== */
+.progress-container {
+  margin-bottom: 1.5rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progress-title {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.progress-value {
+  font-weight: 600;
+}
+
+.progress-bar-background {
+  height: 8px;
+  width: 100%;
+  background-color: rgba(66, 64, 68, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.progress-bar.primary {
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--primary-color)
+  );
+}
+
+.progress-bar.secondary {
+  background: linear-gradient(
+    90deg,
+    var(--success-light),
+    var(--success-color)
+  );
+}
+
+.progress-bar.accent {
+  background: linear-gradient(90deg, var(--accent-light), var(--accent-color));
+}
+
+.progress-bar.highlight {
+  background: linear-gradient(90deg, var(--error-light), var(--error-color));
+}
+
+/* ==========================================================================
+     SENTIMENT REPORT STYLES
+     ========================================================================== */
+.sentiment-report {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+.sentiment-report h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(72, 99, 160, 0.2);
+}
+
+.report-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #fbfbfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
+}
+
+.report-section h3 {
+  color: var(--primary-dark);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.report-section p {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.sentiment-overview {
+  background-color: #f5f9ff;
+  padding: 1.5rem;
+}
+
+.sentiment-result {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sentiment-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.sentiment-emoji {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.confidence-meter {
+  margin-top: 1rem;
+}
+
+.confidence-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.confidence-bar-container {
+  height: 10px;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.confidence-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1s ease-out;
+}
+
+.recommendations {
+  background-color: #f0f7ff;
+  border-left: 4px solid #3a7bd5;
+}
+
+.summary {
+  background-color: #f5f5f5;
+  border-left: 4px solid #2c3e50;
+}
+
+.response-insights {
+  background-color: #f8f9fa;
+}
+
+.response-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.response-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.response-label {
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 0.3rem;
+}
+
+.response-text {
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.no-data {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* ==========================================================================
+     UTILITY COMPONENTS
+     ========================================================================== */
+/* Scroll to top button */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 99;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-top-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-3px);
+}
+
+/* Usage badge */
+.usage-badge {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50px;
+  font-size: 12px;
+  z-index: 99;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.usage-badge:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+     SCROLLBAR STYLING
+     ========================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* ==========================================================================
+     RESPONSIVE ADJUSTMENTS
+     ========================================================================== */
+@media (max-width: 768px) {
+  /* Logo Responsive Adjustments */
+  .logo-img {
+    height: 28px;
+  }
+
+  /* Navigation Responsive Adjustments */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 0;
+    box-shadow: var(--shadow-light);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 0;
+    width: 100%;
+  }
+
+  .nav-links a {
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* Hero Section Responsive Adjustments */
+  .hero {
+    padding: 120px 20px 80px;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  /* Button Container Responsive Adjustments */
+  .button-container {
+    flex-direction: column;
+  }
+
+  .btn-primary {
+    max-width: 100%;
+  }
+
+  .btn-secondary {
+    margin: 0.75rem 0 0 0;
+  }
+
+  /* Footer Responsive Adjustments */
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .footer-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .sub-footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  /* Social Icons Responsive Adjustments */
+  .social-icons {
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+}
+
+/* ==========================================================================
+     ACCESSIBILITY ENHANCEMENTS
+     ========================================================================== */
+/* Focus styles for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* ==========================================================================
+     PRINT STYLES
+     ========================================================================== */
+@media print {
+  .main-nav,
+  .button-container,
+  .footer,
+  .main-footer,
+  .scroll-top-btn,
+  .usage-badge {
+    display: none !important;
+  }
+
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  .hero {
+    background: white !important;
+    color: var(--text-color) !important;
+    clip-path: none;
+    padding: 20px 0;
+  }
+
+  .hero h1 {
+    color: var(--primary-color);
+  }
+
+  .main-container {
+    margin: 0 auto;
+  }
+
+  .input-section {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .output-section {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: var(--text-color) !important;
+  }
+
+  .report-section,
+  .analysis-card,
+  .tone-visualization {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* ==========================================================================
+     Overrides Browser Defaults for Blue Input Text Line
+     ========================================================================== */
+textarea:focus {
+  outline: none !important;
+  border: none !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   UPLOAD AND RECORDING BAR
+   ========================================================================== */
+.upload-bar {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+}
+
+.input-options-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab-btn {
+  background: var(--primary-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  height: 36px;
+}
+
+.tab-btn:hover {
+  background: var(--primary-dark);
+}
+
+.record-icon {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.tab-btn.recording .record-icon {
+  color: #ff0000;
+}
+
+.record-status {
+  font-size: 14px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+
+/* Record button state styles */
+.tab-btn.recording {
+  background: #e63946; /* Red background for Stop state */
+}
+
+.tab-btn.processing {
+  background: #e49b0f; /* Yellow background for Wait state */
+}
+
+.tab-btn.processing .record-icon {
+  animation: spin 1s linear infinite;
+}
+
+.record-text {
+  margin-left: 5px;
+}
+
+/* ==========================================================================
+   EMAIL RESPONSE STYLES
+   ========================================================================== */
+/* Mode Selector */
+.mode-selector {
+  margin-bottom: 1rem;
+}
+
+.mode-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.mode-tab {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  color: var(--text-light);
+  transition: all 0.2s ease;
+}
+
+.mode-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.mode-tab.active {
+  color: var(--primary-color);
+}
+
+.mode-tab.active::after {
+  background-color: var(--primary-color);
+}
+
+.mode-tab:hover:not(.active) {
+  color: var(--primary-dark);
+}
+
+/* Email Response Container */
+.email-response-container {
+  margin-bottom: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.email-response-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  background-color: #f8f9fa;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.email-response-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.email-response-header h3::before {
+  content: "\f0e0";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.email-tone-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tone-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Add a subtle indicator for proofread button to show it's the recommended option */
+.tone-btn[data-tone="proofread"] {
+  border-color: var(--primary-light);
+  position: relative;
+}
+
+.tone-btn[data-tone="proofread"]:not(.active)::before {
+  display: none;
+}
+
+.tone-btn:hover:not(.active) {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+.tone-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.remaining-changes {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.remaining-changes.exhausted {
+  color: var(--error-color);
+  font-weight: 500;
+}
+
+.email-response-body {
+  padding: 1.5rem;
+  background-color: white;
+}
+
+.email-content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  white-space: pre-wrap;
+}
+
+.email-response-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+  background-color: #f8f9fa;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.copy-email-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.copy-email-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.email-response-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.email-response-loading .loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(72, 99, 160, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid var(--primary-color);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.email-response-loading p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.email-response-error {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+  .email-tone-selector {
+    flex-wrap: wrap;
+  }
+
+  .tone-btn {
+    flex: 1;
+    min-width: 40%;
+    text-align: center;
+  }
+}
+
+/* Mode Selector */
+.mode-selector {
+  margin-bottom: 1rem;
+}
+
+.mode-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.mode-tab {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  color: var(--text-light);
+  transition: all 0.2s ease;
+}
+
+.mode-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.mode-tab.active {
+  color: var(--primary-color);
+}
+
+.mode-tab.active::after {
+  background-color: var(--primary-color);
+}
+
+.mode-tab:hover:not(.active) {
+  color: var(--primary-dark);
+}
+
+/* Add this to your styles.css file */
+.hero-content a {
+  color: white;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.hero-content a:hover {
+  color: var(--accent-light); /* This uses your existing accent light color */
+}
+
+.social-connection {
+  display: flex;
+  gap: 15px;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.social-btn i {
+  margin-right: 8px;
+}
+
+/* Hero link styling */
+.hero-content a {
+  color: white;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.hero-content a:hover {
+  color: var(--accent-light); /* This uses your accent light color for hover */
+}
+
+/* web app textarea-wrapper text input the placeholder */
+textarea::placeholder {
+  font-style: italic;
+  color: rgba(
+    66,
+    64,
+    68,
+    0.5
+  ); /* Making it 30% lighter by reducing opacity to 0.5 */
+  font-size: 1.05em; /* Slightly larger font */
+  font-weight: 400; /* Normal weight */
+}
+
+/* For older browsers */
+textarea::-webkit-input-placeholder {
+  font-style: italic;
+  color: rgba(66, 64, 68, 0.5);
+  font-size: 1.05em;
+  font-weight: 400;
+}
+textarea::-moz-placeholder {
+  font-style: italic;
+  color: rgba(66, 64, 68, 0.5);
+  font-size: 1.05em;
+  font-weight: 400;
+}
+textarea:-ms-input-placeholder {
+  font-style: italic;
+  color: rgba(66, 64, 68, 0.5);
+  font-size: 1.05em;
+  font-weight: 400;
+}
+
+/* Footer OpenAI Link Styling */
+.footer-section a[href*="openai.com"] {
+  color: #ffffff !important;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.footer-section a[href*="openai.com"]:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+
+/* Apply the same styling to any OpenAI links in the sub-footer */
+.sub-footer-container a[href*="openai.com"] {
+  color: #ffffff !important;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.sub-footer-container a[href*="openai.com"]:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
